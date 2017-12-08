@@ -1,12 +1,17 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /*
 * Model for DShape class
 *
 */
 public class DShapeModel {
-    //Private variables
+
+    // Private variables-------------------------------------------------------
+    // DShapeModel should store a conceptual "bounds" rectangle
+    // defined by 4 ints:x,y,width,height, and a Color. 
+
     private int x;
     private int y;
     private int height;
@@ -15,8 +20,19 @@ public class DShapeModel {
     private ArrayList<ModelListener> modelListenerArr = new ArrayList();
 
     //Constructor
-    public DShapeModel(){
+    public DShapeModel(int x, int y, int height, int width, Color color){
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+    }
 
+    public Rectangle getBounds(){ return new Rectangle(getX(), getY(), getWidth(), getHeight()); }
+
+    public void notifyChanged(){
+        for(ModelListener listener: modelListenerArr)
+            listener.modelChanged(DShapeModel.this);
     }
 
     //Getters
