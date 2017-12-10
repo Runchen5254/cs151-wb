@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Whiteboard extends JFrame{
 
     private Canvas canvas = new Canvas();//Error: new Canvas(this)
-    private JFrame main = this;
+    private JFrame frame = this;
     private ArrayList<Container> buttonBoxArr = new ArrayList();
 
 
 
-    //main---------------------------------------------------------------------
+    //frame---------------------------------------------------------------------
     public static void main(String[] args){
 
             Whiteboard whiteboard = new Whiteboard();
@@ -57,7 +57,8 @@ public class Whiteboard extends JFrame{
         rectBtn.setSize(80,40);
         boxShape.add(rectBtn);
         rectBtn.addActionListener(e -> {
-            System.out.println("It works!");
+            //System.out.println("It works!");
+
         });
         return boxShape;
     }
