@@ -44,11 +44,15 @@ public class Canvas extends JPanel{
         this.repaint();
     }
 
-    public void paintModel(Graphics graphics){
-        paintComponent(graphics);
 
-        for(DShape dShape : dShapeArr){
-            dShape.draw(graphics);
+    // paintComponent:
+    //  Loop through all the shapes and draw them.
+
+    public void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
+
+        for(DShape shape : dShapeArr){
+            shape.draw(graphics);
         }
     }
 
