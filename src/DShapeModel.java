@@ -19,13 +19,31 @@ public class DShapeModel {
     private Color color;
     private ArrayList<ModelListener> modelListenerArr = new ArrayList();
 
-    //Constructor
+    //Constructor--------------------------------------------------------------
+    public DShapeModel(){this.setColor(Color.GRAY);}
+
     public DShapeModel(int x, int y, int height, int width, Color color){
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.color = color;
+    }
+
+    //Methods------------------------------------------------------------------
+
+    // addModelListener:
+    //  Add a model listener to a new shape.
+    //  Before adding, check if modelListenerArr
+    //  is empty.
+
+    public void addModelListener(ModelListener modelListener){
+        if(this.modelListenerArr.isEmpty()) {
+            this.modelListenerArr = new ArrayList();
+            this.modelListenerArr.add(modelListener);
+        }
+        else
+            this.modelListenerArr.add(modelListener);
     }
 
     public Rectangle getBounds(){ return new Rectangle(getX(), getY(), getWidth(), getHeight()); }
@@ -35,7 +53,7 @@ public class DShapeModel {
             listener.modelChanged(DShapeModel.this);
     }
 
-    //Getters
+    //Getters------------------------------------------------------------------
     public int getX() { return x; }
     public int getY() { return y; }
     public int getHeight() { return height; }
@@ -43,7 +61,7 @@ public class DShapeModel {
     public Color getColor() { return color; }
     public ArrayList<ModelListener> getModelListenerArr() { return modelListenerArr; }
 
-    //Setters
+    //Setters------------------------------------------------------------------
     public void setX(int x) { this.x = x; }
     public void setY(int y) { this.y = y; }
     public void setHeight(int height) { this.height = height; }
