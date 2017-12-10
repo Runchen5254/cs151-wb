@@ -12,13 +12,14 @@ public class Canvas extends JPanel{
 
     private Canvas canvas = this;
 
-    public Canvas(Whiteboard wb) {
+    public Canvas() { //Error: Canvas(WhiteBoard wb)
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Canvas.this.setSize(400,400);
-                Canvas.this.setBackground(Color.WHITE);
                 Canvas.this.selectedX = e.getX();
                 Canvas.this.selectedY = e.getY();
+                Canvas.this.setBackground(Color.WHITE);
+                Canvas.this.setVisible(true);
             }
         });
 
