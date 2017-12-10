@@ -30,36 +30,36 @@ public class Whiteboard extends JFrame{
     public void addCanvas(){ this.getContentPane().add("Center", this.canvas); }
 
     public void addControls(){
-        Box container = Box.createVerticalBox();
-        Box addBox = this.getInputShapeBox();
+        Box boxContainer = Box.createVerticalBox();
+        Box addBox = this.getBoxShape();
 
-        container.setSize(500,500);
-        container.add(Box.createVerticalStrut(5));
-        container.add(addBox);
+        boxContainer.setSize(500,500);
+        boxContainer.add(Box.createVerticalStrut(5));
+        boxContainer.add(addBox);
 
-        this.buttonBoxArr.add(container);
+        this.buttonBoxArr.add(boxContainer);
         this.buttonBoxArr.add(addBox);
 
-        this.getContentPane().add("West",container);
+        this.getContentPane().add("West",boxContainer);
 
 
     }
 
-    public Box getInputShapeBox(){
-        Box InputBox = Box.createHorizontalBox();
-        InputBox.setSize(500,50);
+    public Box getBoxShape(){
+        Box boxShape = Box.createHorizontalBox();
+        boxShape.setSize(500,50);
 
         JLabel label = new JLabel("Add Shape: ");
-        InputBox.add(label);
+        boxShape.add(label);
 
-        InputBox.add(Box.createRigidArea(new Dimension(5,0)));
+        boxShape.add(Box.createRigidArea(new Dimension(5,0)));
         JButton rectBtn = new JButton("Rectangle");
         rectBtn.setSize(80,40);
-        InputBox.add(rectBtn);
+        boxShape.add(rectBtn);
         rectBtn.addActionListener(e -> {
             System.out.println("It works!");
         });
-        return InputBox;
+        return boxShape;
     }
 
 }
