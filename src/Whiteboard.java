@@ -57,10 +57,23 @@ public class Whiteboard extends JFrame{
         rectBtn.setSize(80,40);
         boxShape.add(rectBtn);
         rectBtn.addActionListener(e -> {
-            //System.out.println("It works!");
+            DRectModel rect = new DRectModel();
+            this.createDefaultShape(rect);
+            this.canvas.addShape(rect);
 
         });
         return boxShape;
+    }
+
+    //createDefaultShape:
+    //  When calling this method, set x, y, height, and width
+    //  of a shape to a default value.
+
+    public void createDefaultShape(DShapeModel model){
+        model.setX(15);
+        model.setY(15);
+        model.setHeight(15);
+        model.setWidth(15);
     }
 
 }
