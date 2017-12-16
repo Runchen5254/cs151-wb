@@ -12,7 +12,6 @@ public class Whiteboard extends JFrame{
 
     //frame---------------------------------------------------------------------
     public static void main(String[] args){
-
             Whiteboard whiteboard = new Whiteboard();
             whiteboard.setVisible(true);
 
@@ -27,13 +26,18 @@ public class Whiteboard extends JFrame{
     }
 
     //Methods------------------------------------------------------------------
-    public void addCanvas(){ this.getContentPane().add("Center", this.canvas); }
+    public void addCanvas(){
+        this.canvas.setBackground(Color.WHITE);
+        this.canvas.setMaximumSize(new Dimension(400,400));
+        this.canvas.setMinimumSize(new Dimension(400,400));
+        this.getContentPane().add("Center", this.canvas);
+    }
 
     public void addControls(){
         Box boxContainer = Box.createVerticalBox();
         Box addBox = this.getBoxShape();
 
-        boxContainer.setSize(500,500);
+        boxContainer.setSize(400,400);
         boxContainer.add(Box.createVerticalStrut(5));
         boxContainer.add(addBox);
 
@@ -46,22 +50,41 @@ public class Whiteboard extends JFrame{
     }
 
     public Box getBoxShape(){
+        //Box Shape
         Box boxShape = Box.createHorizontalBox();
-        boxShape.setSize(500,50);
+        boxShape.setMaximumSize(new Dimension(400,40));
 
-        JLabel label = new JLabel("Add Shape: ");
-        boxShape.add(label);
+        //Label
+        JLabel addShapeLabel = new JLabel("Add Shape: ");
+        boxShape.add(addShapeLabel);
 
-        boxShape.add(Box.createRigidArea(new Dimension(5,0)));
+        //Rectangle button
         JButton rectBtn = new JButton("Rectangle");
-        rectBtn.setSize(80,40);
+        rectBtn.setMaximumSize(new Dimension(80,80));
         boxShape.add(rectBtn);
+
+        //Oval button
+        JButton ovalBtn = new JButton("Oval");
+        ovalBtn.setMaximumSize(new Dimension(80,80));
+        boxShape.add(ovalBtn);
+
+        //Line button
+        JButton lineBtn = new JButton("Line");
+        lineBtn.setMaximumSize(new Dimension(80,80));
+        boxShape.add(lineBtn);
+
+        //Text
+        JButton textBtn = new JButton("Text");
+        textBtn.setMaximumSize(new Dimension(80,80));
+        boxShape.add(textBtn);
+
+        //Listeners
         rectBtn.addActionListener(e -> {
             DRectModel rect = new DRectModel();
             this.createDefaultShape(rect);
             this.canvas.addShape(rect);
-
         });
+
         return boxShape;
     }
 

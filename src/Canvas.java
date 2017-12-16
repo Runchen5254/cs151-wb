@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Point;
+import java.awt.Graphics;
 
 public class Canvas extends JPanel{
     private Canvas canvas = this;
@@ -11,16 +13,64 @@ public class Canvas extends JPanel{
                                                                 //single selected shape at any one time.
 
     private int selectedX, selectedY;
+    private Point movingKnob;
+    private Point anchorKnob;
 
 
     public Canvas() { //Error: Canvas(WhiteBoard wb)
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                Canvas.this.setSize(400,400);
                 Canvas.this.selectedX = e.getX();
                 Canvas.this.selectedY = e.getY();
-                Canvas.this.setBackground(Color.WHITE);
-                Canvas.this.setVisible(true);
+
+                if (Canvas.this.selectedShape != null){
+                    ArrayList<Point> knobPoints = Canvas.this.selectedShape.getKnobs();
+
+                    for(Point point: knobPoints){
+                        if ((double)e.getX() <= point.getX() + 4.0D && (double)e.getX() >= point.getX() - 4.0D && (double)e.getY() <= point.getY() + 4.0D && (double)e.getY() >= point.getY() - 4.0D) {
+                            Canvas.this.movingKnob = point;
+//                            if (Canvas.this.selectedShape instanceof DLine) {
+//                                if (((Point)knobPoints.get(0)).equals(Canvas.this.movingKnob)) {
+//                                    Canvas.this.anchorKnob = (Point)knobPoints.get(1);
+//                                } else if (((Point)knobPoints.get(1)).equals(Canvas.this.movingKnob)) {
+//                                    Canvas.this.anchorKnob = (Point)knobPoints.get(0);
+//                                }
+//                            } else
+                                if (((Point)knobPoints.get(0)).equals(Canvas.this.movingKnob)) {
+                                Canvas.this.anchorKnob = (Point)knobPoints.get(3);
+                            } else if (((Point)knobPoints.get(1)).equals(Canvas.this.movingKnob)) {
+                                Canvas.this.anchorKnob = (Point)knobPoints.get(2);
+                            } else if (((Point)knobPoints.get(2)).equals(Canvas.this.movingKnob)) {
+                                Canvas.this.anchorKnob = (Point)knobPoints.get(1);
+                            } else if (((Point)knobPoints.get(3)).equals(Canvas.this.movingKnob)) {
+                                Canvas.this.anchorKnob = (Point)knobPoints.get(0);
+                            }
+
+                            return;
+                        }
+                    }
+                }
+
+                Canvas.this.anchorKnob = null;
+                Canvas.this.setSelectedShape((DShape)null);
+                //whiteboard.disableTextButtons();
+
+                for(int i = Canvas.this.dShapeArr.size() - 1; i >= 0; --i) {
+                    DShape shape = (DShape)Canvas.this.dShapeArr.get(i);
+                    Rectangle bounds = shape.getBounds();
+                    if (bounds.contains(Canvas.this.selectedX, Canvas.this.selectedY)) {
+                        Canvas.this.setSelectedShape(shape);
+                        Canvas.this.selectedShape.drawKnobs(Canvas.this.getGraphics());
+//                        if (Canvas.this.selectedShape instanceof DText) {
+//                            whiteboard.enableTextButtons();
+//                            DTextModel model = (DTextModel)Canvas.this.selectedShape.getModel();
+//                            whiteboard.fontSelect.setSelectedIndex(model.getIndex());
+//                            whiteboard.inputField.setText(model.getText());
+//                        }
+
+                        return;
+                    }
+                }
             }
         });
 
@@ -48,11 +98,11 @@ public class Canvas extends JPanel{
     // paintComponent:
     //  Loop through all the shapes and draw them.
 
-    public void paintComponent(Graphics graphics){
-        super.paintComponent(graphics);
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
 
         for(DShape shape : dShapeArr){
-            shape.draw(graphics);
+            shape.draw(g);
         }
     }
 

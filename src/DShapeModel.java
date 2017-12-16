@@ -46,8 +46,6 @@ public class DShapeModel {
             this.modelListenerArr.add(modelListener);
     }
 
-    public Rectangle getBounds(){ return new Rectangle(getX(), getY(), getWidth(), getHeight()); }
-
     public void notifyChanged(){
         for(ModelListener listener: modelListenerArr)
             listener.modelChanged(DShapeModel.this);
@@ -60,6 +58,7 @@ public class DShapeModel {
     public int getWidth() { return width; }
     public Color getColor() { return color; }
     public ArrayList<ModelListener> getModelListenerArr() { return modelListenerArr; }
+    public Rectangle getBounds(){ return new Rectangle(getX(), getY(), getWidth(), getHeight()); }
 
     //Setters------------------------------------------------------------------
     public void setX(int x) { this.x = x; }
